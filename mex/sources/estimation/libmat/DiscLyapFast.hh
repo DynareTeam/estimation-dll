@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Dynare Team
+ * Copyright (C) 2010-2013 Dynare Team
  *
  * This file is part of Dynare.
  *
@@ -62,13 +62,13 @@ public:
   };
   virtual ~DiscLyapFast() {};
   template <class MatG, class MatV, class MatX >
-  void solve_lyap(const MatG &G, const MatV &V, MatX &X, double tol, size_t flag_ch) throw (DLPException);
+  void solve_lyap(const MatG &G, const MatV &V, MatX &X, double tol = 1e-16, size_t flag_ch = 0) throw (DLPException);
 
 };
 
 template <class MatG, class MatV, class MatX >
 void
-DiscLyapFast::solve_lyap(const MatG &G, const MatV &V, MatX &X, double tol = 1e-16, size_t flag_ch = 0) throw (DLPException)
+DiscLyapFast::solve_lyap(const MatG &G, const MatV &V, MatX &X, double tol, size_t flag_ch) throw (DLPException)
 {
   P0 = V;
   P1 = V;

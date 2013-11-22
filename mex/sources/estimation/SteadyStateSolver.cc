@@ -19,6 +19,8 @@
 
 #include "SteadyStateSolver.hh"
 
+const double SteadyStateSolver::tolerance = 1e-7;
+
 SteadyStateSolver::SteadyStateSolver(const std::string &basename, size_t n_endo_arg)
   : static_dll(basename), n_endo(n_endo_arg), residual(n_endo), g1(n_endo)
 {

@@ -48,7 +48,7 @@ private:
   static int static_df(const gsl_vector *yy, void *p, gsl_matrix *J);
   static int static_fdf(const gsl_vector *yy, void *p, gsl_vector *F, gsl_matrix *J);
 
-  const static double tolerance = 1e-7;
+  const static double tolerance;
   const static size_t max_iterations = 1000;
 public:
   class SteadyStateException

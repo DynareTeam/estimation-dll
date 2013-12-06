@@ -509,7 +509,7 @@ sampleMHMC(LogPosteriorDensity &lpd, RandomWalkMetropolisHastings &rwmh,
           ssFName << resultsFileStem << DIRECTORY_SEPARATOR << "metropolis" << DIRECTORY_SEPARATOR << resultsFileStem << "_mh" << (size_t) NewFileVw(b-1) << "_blck" << b << ".mat";
           mhFName = ssFName.str();
 
-          drawmat = Mat_Open(mhFName.c_str(), MAT_ACC_RDWR);
+          drawmat = Mat_Create(mhFName.c_str(), NULL);
           if (drawmat == 0)
             {
               mexPrintf("Error in MH: Can not open draws Mat file for writing:  %s \n", mhFName.c_str());

@@ -36,7 +36,8 @@ private:
   Matrix detrendedData;
 
 public:
-  virtual ~LogLikelihoodMain();
+  virtual
+  ~LogLikelihoodMain();
   LogLikelihoodMain(const std::string &basename, EstimatedParametersDescription &estiParDesc, size_t n_endo, size_t n_exo,
                     const std::vector<size_t> &zeta_fwrd_arg, const std::vector<size_t> &zeta_back_arg, const std::vector<size_t> &zeta_mixed_arg,
                     const std::vector<size_t> &zeta_static_arg, const double qz_criterium_arg, const std::vector<size_t> &varobs_arg,
@@ -53,25 +54,30 @@ public:
    */
 
   template <class VEC1, class VEC2>
-  double compute(VEC1 &steadyState, VEC2 &estParams, VectorView &deepParams, const MatrixConstView &data, 
-		 MatrixView &Q, Matrix &H, size_t start)
+  double
+  compute(VEC1 &steadyState, VEC2 &estParams, VectorView &deepParams, const MatrixConstView &data,
+          MatrixView &Q, Matrix &H, size_t start)
   {
     double logLikelihood = 0;
     for (size_t i = 0; i < estSubsamples.size(); ++i)
       {
-	MatrixConstView dataView(data, 0, estSubsamples[i].startPeriod,
-				 data.getRows(), estSubsamples[i].endPeriod-estSubsamples[i].startPeriod+1);
-	MatrixView detrendedDataView(detrendedData, 0, estSubsamples[i].startPeriod,
-				     data.getRows(), estSubsamples[i].endPeriod-estSubsamples[i].startPeriod+1);
+        MatrixConstView dataView(data, 0, estSubsamples[i].startPeriod,
+                                 data.getRows(), estSubsamples[i].endPeriod-estSubsamples[i].startPeriod+1);
+        MatrixView detrendedDataView(detrendedData, 0, estSubsamples[i].startPeriod,
+                                     data.getRows(), estSubsamples[i].endPeriod-estSubsamples[i].startPeriod+1);
 
-	VectorView vllView(vll, estSubsamples[i].startPeriod, estSubsamples[i].endPeriod-estSubsamples[i].startPeriod+1);
-	logLikelihood += logLikelihoodSubSample.compute(steadyState, dataView, estParams, deepParams,
-							Q, H, vllView, detrendedDataView, start, i);
+        VectorView vllView(vll, estSubsamples[i].startPeriod, estSubsamples[i].endPeriod-estSubsamples[i].startPeriod+1);
+        logLikelihood += logLikelihoodSubSample.compute(steadyState, dataView, estParams, deepParams,
+                                                        Q, H, vllView, detrendedDataView, start, i);
       }
     return logLikelihood;
   };
 
-  Vector &getVll() { return vll; };
+  Vector &
+  getVll()
+  {
+    return vll;
+  };
 };
 
 #endif // !defined(E126AEF5_AC28_400a_821A_3BCFD1BC4C22__INCLUDED_)

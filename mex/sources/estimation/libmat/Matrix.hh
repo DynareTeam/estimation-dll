@@ -69,19 +69,52 @@ public:
   Matrix(size_t rows_arg, size_t cols_arg);
   Matrix(size_t size_arg);
   Matrix(const Matrix &arg);
-  virtual ~Matrix();
-  inline size_t getRows() const { return rows; }
-  inline size_t getCols() const { return cols; }
-  inline size_t getLd() const { return rows; }
-  inline double *getData() { return data; }
-  inline const double *getData() const { return data; }
-  inline void setAll(double val) { std::fill_n(data, rows*cols, val); }
-  inline double &operator() (size_t i, size_t j) { return data[i+j*rows]; }
-  inline const double &operator() (size_t i, size_t j) const { return data[i+j*rows]; }
+  virtual
+  ~Matrix();
+  inline size_t
+  getRows() const
+  {
+    return rows;
+  }
+  inline size_t
+  getCols() const
+  {
+    return cols;
+  }
+  inline size_t
+  getLd() const
+  {
+    return rows;
+  }
+  inline double *
+  getData()
+  {
+    return data;
+  }
+  inline const double *
+  getData() const
+  {
+    return data;
+  }
+  inline void
+  setAll(double val)
+  {
+    std::fill_n(data, rows*cols, val);
+  }
+  inline double &
+  operator()(size_t i, size_t j)
+  {
+    return data[i+j*rows];
+  }
+  inline const double &
+  operator()(size_t i, size_t j) const
+  {
+    return data[i+j*rows];
+  }
   //! Assignment operator, only works for matrices of same dimension
   template<class Mat>
   Matrix &
-  operator= (const Mat &arg)
+  operator=(const Mat &arg)
   {
     assert(rows == arg.getRows() && cols == arg.getCols());
     for (size_t j = 0; j < cols; j++)
@@ -112,23 +145,54 @@ public:
            && col_offset < arg.getCols()
            && col_offset + cols_arg <= arg.getCols());
   }
-  virtual ~MatrixView(){};
-  inline size_t getRows() const { return rows; }
-  inline size_t getCols() const { return cols; }
-  inline size_t getLd() const { return ld; }
-  inline double *getData() { return data; }
-  inline const double *getData() const { return data; }
-  inline void setAll(double val)
+  virtual ~MatrixView()
+  {
+  };
+  inline size_t
+  getRows() const
+  {
+    return rows;
+  }
+  inline size_t
+  getCols() const
+  {
+    return cols;
+  }
+  inline size_t
+  getLd() const
+  {
+    return ld;
+  }
+  inline double *
+  getData()
+  {
+    return data;
+  }
+  inline const double *
+  getData() const
+  {
+    return data;
+  }
+  inline void
+  setAll(double val)
   {
     for (double *p = data; p < data + cols*ld; p += ld)
       std::fill_n(p, rows, val);
   }
-  inline double &operator() (size_t i, size_t j) { return data[i+j*ld]; }
-  inline const double &operator() (size_t i, size_t j) const { return data[i+j*ld]; }
+  inline double &
+  operator()(size_t i, size_t j)
+  {
+    return data[i+j*ld];
+  }
+  inline const double &
+  operator()(size_t i, size_t j) const
+  {
+    return data[i+j*ld];
+  }
   //! Assignment operator, only works for matrices of same dimension
   template<class Mat>
   MatrixView &
-  operator= (const Mat &arg)
+  operator=(const Mat &arg)
   {
     assert(rows == arg.getRows() && cols == arg.getCols());
     for (size_t j = 0; j < cols; j++)
@@ -158,12 +222,34 @@ public:
            && col_offset < arg.getCols()
            && col_offset + cols_arg <= arg.getCols());
   }
-  virtual ~MatrixConstView(){};
-  inline size_t getRows() const { return rows; }
-  inline size_t getCols() const { return cols; }
-  inline size_t getLd() const { return ld; }
-  inline const double *getData() const { return data; }
-  inline const double &operator() (size_t i, size_t j) const { return data[i+j*ld]; }
+  virtual ~MatrixConstView()
+  {
+  };
+  inline size_t
+  getRows() const
+  {
+    return rows;
+  }
+  inline size_t
+  getCols() const
+  {
+    return cols;
+  }
+  inline size_t
+  getLd() const
+  {
+    return ld;
+  }
+  inline const double *
+  getData() const
+  {
+    return data;
+  }
+  inline const double &
+  operator()(size_t i, size_t j) const
+  {
+    return data[i+j*ld];
+  }
 };
 
 std::ostream &operator<<(std::ostream &out, const Matrix &M);
@@ -561,9 +647,9 @@ namespace mat
 
     if (vToRows.size() == 0 && vToCols.size() == 0 && vrows.size() == 0 && vcols.size() == 0)
       a = b;
-    else if (vToRows.size() == 0 && vrows.size() == 0)                                                                                                                                                                                                                                                                                                                                            // just reorder columns
+    else if (vToRows.size() == 0 && vrows.size() == 0)                                                                                                                                                                                                                                                                                                                                                                                                    // just reorder columns
       reorderColumnsByVectors(a, vToCols, b, vcols);
-    else if (vToCols.size() == 0 && vcols.size() == 0)                                                                                                                                                                                                                                                                                                                                            // just reorder rows
+    else if (vToCols.size() == 0 && vcols.size() == 0)                                                                                                                                                                                                                                                                                                                                                                                                    // just reorder rows
       reorderRowsByVectors(a, vToRows, b, vrows);
     else
       {

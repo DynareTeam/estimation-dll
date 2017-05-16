@@ -32,9 +32,8 @@
 #include "ts_exception.h"
 
 // <model>_Dynamic DLL pointer
-typedef void (*DynamicFn)
-(const double *y, const double *x, int nb_row_x, const double *params, const double *steady_state,
- int it_, double *residual, double *g1, double *g2, double *g3);
+typedef void (*DynamicFn)(const double *y, const double *x, int nb_row_x, const double *params, const double *steady_state,
+                          int it_, double *residual, double *g1, double *g2, double *g3);
 
 /**
  * creates pointer to Dynamic function inside <model>_dynamic.dll
@@ -53,12 +52,14 @@ private:
 public:
   // construct and load Dynamic model DLL
   DynamicModelDLL(const std::string &basename) throw (TSException);
-  virtual ~DynamicModelDLL();
+  virtual
+  ~DynamicModelDLL();
 
   //! evaluate Dynamic model DLL
   template<class Vec1, class Vec2, class Vec3, class Vec4, class Mat1>
-  void eval(const Vec1 &y, const Mat1 &x, const Vec2 &modParams, const Vec3 &ySteady,
-            Vec4 &residual, Matrix *g1, Matrix *g2, Matrix *g3) throw (TSException)
+  void
+  eval(const Vec1 &y, const Mat1 &x, const Vec2 &modParams, const Vec3 &ySteady,
+       Vec4 &residual, Matrix *g1, Matrix *g2, Matrix *g3) throw (TSException)
   {
     assert(y.getStride() == 1);
     assert(x.getLd() == x.getRows());
@@ -70,6 +71,6 @@ public:
     assert(g3->getLd() == g3->getRows());
 
     Dynamic(y.getData(), x.getData(), 1, modParams.getData(), ySteady.getData(), 0, residual.getData(),
-	    g1 == NULL ? NULL : g1->getData(), g2 == NULL ? NULL : g2->getData(), g3 == NULL ? NULL : g3->getData());
+            g1 == NULL ? NULL : g1->getData(), g2 == NULL ? NULL : g2->getData(), g3 == NULL ? NULL : g3->getData());
   };
 };

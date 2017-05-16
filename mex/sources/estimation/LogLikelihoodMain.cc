@@ -31,11 +31,11 @@ LogLikelihoodMain::LogLikelihoodMain(const std::string &basename, EstimatedParam
                                      const std::vector<size_t> &varobs, double riccati_tol, double lyapunov_tol,
                                      bool noconstant_arg)
 
-  : estSubsamples(estiParDesc.estSubsamples),
-    logLikelihoodSubSample(basename, estiParDesc, n_endo, n_exo, zeta_fwrd_arg, zeta_back_arg, zeta_mixed_arg, zeta_static_arg, qz_criterium,
-                           varobs, riccati_tol, lyapunov_tol, noconstant_arg),
-    vll(estiParDesc.getNumberOfPeriods()), // time dimension size of data
-    detrendedData(varobs.size(), estiParDesc.getNumberOfPeriods())
+: estSubsamples(estiParDesc.estSubsamples),
+  logLikelihoodSubSample(basename, estiParDesc, n_endo, n_exo, zeta_fwrd_arg, zeta_back_arg, zeta_mixed_arg, zeta_static_arg, qz_criterium,
+                         varobs, riccati_tol, lyapunov_tol, noconstant_arg),
+  vll(estiParDesc.getNumberOfPeriods()), // time dimension size of data
+  detrendedData(varobs.size(), estiParDesc.getNumberOfPeriods())
 {
 
 }
@@ -44,5 +44,3 @@ LogLikelihoodMain::~LogLikelihoodMain()
 {
 
 }
-
-

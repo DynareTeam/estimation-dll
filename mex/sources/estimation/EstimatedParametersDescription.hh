@@ -45,7 +45,8 @@
 class EstimatedParametersDescription
 {
 public:
-  virtual ~EstimatedParametersDescription();
+  virtual
+  ~EstimatedParametersDescription();
   EstimatedParametersDescription(std::vector<EstimationSubsample> &estSubsamples, std::vector<EstimatedParameter> &estParams);
   std::vector<EstimationSubsample> estSubsamples;
   std::vector<EstimatedParameter> estParams;

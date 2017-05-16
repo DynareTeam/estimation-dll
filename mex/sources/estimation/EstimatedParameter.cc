@@ -37,4 +37,3 @@ EstimatedParameter::EstimatedParameter(const EstimatedParameter::pType type_arg,
 EstimatedParameter::~EstimatedParameter()
 {
 }
-

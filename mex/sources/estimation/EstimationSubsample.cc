@@ -33,4 +33,3 @@ EstimationSubsample::EstimationSubsample(size_t INstartPeriod, size_t INendPerio
 EstimationSubsample::~EstimationSubsample()
 {
 }
-

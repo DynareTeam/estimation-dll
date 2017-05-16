@@ -60,7 +60,9 @@ public:
   {
     mat::set_identity(I);
   };
-  virtual ~DiscLyapFast() {};
+  virtual ~DiscLyapFast()
+  {
+  };
   template <class MatG, class MatV, class MatX >
   void solve_lyap(const MatG &G, const MatV &V, MatX &X, double tol = 1e-16, size_t flag_ch = 0) throw (DLPException);
 

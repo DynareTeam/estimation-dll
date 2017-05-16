@@ -33,12 +33,12 @@ SteadyStateSolver::static_f(const gsl_vector *yy, void *p, gsl_vector *F)
   params *pp = (params *) p;
   VectorConstView deepParams(pp->deepParams, pp->n_params, 1);
   MatrixConstView x(pp->x, 1, pp->n_exo, 1);
-  
+
   VectorView y(yy->data, yy->size, yy->stride);
   VectorView residual(F->data, F->size, F->stride);
 
   pp->static_dll->eval(y, x, deepParams, residual, NULL, NULL);
-  
+
   return GSL_SUCCESS;
 }
 
@@ -48,11 +48,11 @@ SteadyStateSolver::static_df(const gsl_vector *yy, void *p, gsl_matrix *J)
   params *pp = (params *) p;
   VectorConstView deepParams(pp->deepParams, pp->n_params, 1);
   MatrixConstView x(pp->x, 1, pp->n_exo, 1);
-  
+
   VectorView y(yy->data, yy->size, yy->stride);
 
   pp->static_dll->eval(y, x, deepParams, *pp->residual, pp->g1, NULL);
-  
+
   assert(J->size1 == J->size2 && J->size1 == J->tda);
   MatrixView g1t(J->data, J->size1, J->size2, J->tda);
   mat::transpose(g1t, *pp->g1); // GSL wants row-major order
@@ -66,16 +66,15 @@ SteadyStateSolver::static_fdf(const gsl_vector *yy, void *p, gsl_vector *F, gsl_
   params *pp = (params *) p;
   VectorConstView deepParams(pp->deepParams, pp->n_params, 1);
   MatrixConstView x(pp->x, 1, pp->n_exo, 1);
-  
+
   VectorView y(yy->data, yy->size, yy->stride);
   VectorView residual(F->data, F->size, F->stride);
 
   pp->static_dll->eval(y, x, deepParams, residual, pp->g1, NULL);
-  
+
   assert(J->size1 == J->size2 && J->size1 == J->tda);
   MatrixView g1t(J->data, J->size1, J->size2, J->tda);
   mat::transpose(g1t, *pp->g1); // GSL wants row-major order
 
   return GSL_SUCCESS;
 }
-

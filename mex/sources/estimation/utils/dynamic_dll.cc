@@ -88,4 +88,3 @@ DynamicModelDLL::~DynamicModelDLL()
   dlclose(dynamicHinstance);
 #endif
 }
-

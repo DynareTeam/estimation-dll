@@ -59,7 +59,8 @@ class EstimationSubsample
 {
 public:
   EstimationSubsample(size_t startPeriod, size_t endPeriod);
-  virtual ~EstimationSubsample();
+  virtual
+  ~EstimationSubsample();
 
   size_t startPeriod;
   size_t endPeriod;

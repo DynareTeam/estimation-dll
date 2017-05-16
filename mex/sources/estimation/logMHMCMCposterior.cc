@@ -47,7 +47,11 @@ public:
   LogMHMCMCposteriorMexErrMsgTxtException(const std::string &msg) : errMsg(msg)
   {
   }
-  inline const char *getErrMsg() { return errMsg.c_str(); }
+  inline const char *
+  getErrMsg()
+  {
+    return errMsg.c_str();
+  }
 };
 
 void
@@ -279,7 +283,7 @@ sampleMHMC(LogPosteriorDensity &lpd, RandomWalkMetropolisHastings &rwmh,
               // new or different size result arrays/matrices
               currInitSizeArray = (size_t) InitSizeArray(b-1);
               if (mxMhLogPostDensPtr)
-                mxDestroyArray(mxMhLogPostDensPtr);                                                                                                          // log post density array
+                mxDestroyArray(mxMhLogPostDensPtr);                                                                                                                                                                // log post density array
               mxMhLogPostDensPtr = mxCreateDoubleMatrix(currInitSizeArray, 1, mxREAL);
               if (mxMhLogPostDensPtr == NULL)
                 {
@@ -287,7 +291,7 @@ sampleMHMC(LogPosteriorDensity &lpd, RandomWalkMetropolisHastings &rwmh,
                   return (-1);
                 }
               if (mxMhParamDrawsPtr)
-                mxDestroyArray(mxMhParamDrawsPtr);                                                                                                        // accepted MCMC MH draws
+                mxDestroyArray(mxMhParamDrawsPtr);                                                                                                                                                             // accepted MCMC MH draws
               mxMhParamDrawsPtr =  mxCreateDoubleMatrix(currInitSizeArray, npar,  mxREAL);
               if (mxMhParamDrawsPtr == NULL)
                 {
@@ -375,7 +379,7 @@ sampleMHMC(LogPosteriorDensity &lpd, RandomWalkMetropolisHastings &rwmh,
               // new or different size result arrays/matrices
               currInitSizeArray = (size_t) InitSizeArray(b-1);
               if (mxMhLogPostDensPtr)
-                mxDestroyArray(mxMhLogPostDensPtr);                                                                                                          // log post density array
+                mxDestroyArray(mxMhLogPostDensPtr);                                                                                                                                                                // log post density array
               mxMhLogPostDensPtr = mxCreateDoubleMatrix(currInitSizeArray, 1, mxREAL);
               if (mxMhLogPostDensPtr == NULL)
                 {
@@ -383,7 +387,7 @@ sampleMHMC(LogPosteriorDensity &lpd, RandomWalkMetropolisHastings &rwmh,
                   return (-1);
                 }
               if (mxMhParamDrawsPtr)
-                mxDestroyArray(mxMhParamDrawsPtr);                                                                                                        // accepted MCMC MH draws
+                mxDestroyArray(mxMhParamDrawsPtr);                                                                                                                                                             // accepted MCMC MH draws
               mxMhParamDrawsPtr =  mxCreateDoubleMatrix(currInitSizeArray, npar,  mxREAL);
               if (mxMhParamDrawsPtr == NULL)
                 {
@@ -603,9 +607,9 @@ sampleMHMC(LogPosteriorDensity &lpd, RandomWalkMetropolisHastings &rwmh,
 
  cleanup:
   if (mxMhLogPostDensPtr)
-    mxDestroyArray(mxMhLogPostDensPtr);                                            // delete log post density array
+    mxDestroyArray(mxMhLogPostDensPtr);                                                                                      // delete log post density array
   if (mxMhParamDrawsPtr)
-    mxDestroyArray(mxMhParamDrawsPtr);                                            // delete accepted MCMC MH draws
+    mxDestroyArray(mxMhParamDrawsPtr);                                                                                     // delete accepted MCMC MH draws
 
 #ifdef MATLAB_MEX_FILE
   // Waitbar
@@ -631,7 +635,7 @@ sampleMHMC(LogPosteriorDensity &lpd, RandomWalkMetropolisHastings &rwmh,
 int
 logMCMCposterior(VectorConstView &estParams, const MatrixConstView &data,
                  const size_t fblock, const size_t nBlocks, const VectorConstView &nMHruns, const MatrixConstView &D,
-		 VectorView &steadyState, VectorView &deepParams, MatrixView &Q, Matrix &H)
+                 VectorView &steadyState, VectorView &deepParams, MatrixView &Q, Matrix &H)
 {
   // Retrieve pointers to global variables
   const mxArray *M_ = mexGetVariablePtr("global", "M_");
@@ -712,7 +716,6 @@ logMCMCposterior(VectorConstView &estParams, const MatrixConstView &data,
                     estParamsInfo);
   EstimatedParametersDescription epd(estSubsamples, estParamsInfo);
 
-
   bool noconstant = (bool) *mxGetPr(mxGetField(options_, 0, "noconstant"));
 
   // Allocate LogPosteriorDensity object
@@ -771,20 +774,20 @@ mexFunction(int nlhs, mxArray *plhs[],
 
   assert(nMHruns.getSize() == nBlocks);
 
-  mxArray *dataset_data = mxGetField(dataset,0,"data");
+  mxArray *dataset_data = mxGetField(dataset, 0, "data");
   MatrixConstView data(mxGetPr(dataset_data), mxGetM(dataset_data), mxGetN(dataset_data), mxGetM(dataset_data));
 
-  int endo_nbr = *(int*)mxGetPr(mxGetField(M_, 0, "endo_nbr"));
-  int exo_nbr = *(int*)mxGetPr(mxGetField(M_, 0, "exo_nbr"));
-  int param_nbr = *(int*)mxGetPr(mxGetField(M_, 0, "param_nbr"));
+  int endo_nbr = *(int *) mxGetPr(mxGetField(M_, 0, "endo_nbr"));
+  int exo_nbr = *(int *) mxGetPr(mxGetField(M_, 0, "exo_nbr"));
+  int param_nbr = *(int *) mxGetPr(mxGetField(M_, 0, "param_nbr"));
   int varobs_nbr = mxGetN(mxGetField(options_, 0, "varobs"));
 
-  VectorView steadyState(mxGetPr(mxGetField(oo_,0,"steady_state")),endo_nbr, 1);
-  VectorView deepParams(mxGetPr(mxGetField(M_, 0, "params")),param_nbr,1);
+  VectorView steadyState(mxGetPr(mxGetField(oo_, 0, "steady_state")), endo_nbr, 1);
+  VectorView deepParams(mxGetPr(mxGetField(M_, 0, "params")), param_nbr, 1);
 
   MatrixView Q(mxGetPr(mxGetField(M_, 0, "Sigma_e")), exo_nbr, exo_nbr, exo_nbr);
 
-  Matrix H(varobs_nbr,varobs_nbr);
+  Matrix H(varobs_nbr, varobs_nbr);
   const mxArray *H_mx = mxGetField(M_, 0, "H");
   if (mxGetM(H_mx) == 1 && mxGetN(H_mx) == 1 && *mxGetPr(H_mx) == 0)
     H.setAll(0.0);

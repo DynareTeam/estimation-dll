@@ -44,4 +44,3 @@ DetrendData::detrend(const VectorView &SteadyState, const MatrixConstView &dataV
           detrendedDataView(i, j) = dataView(i, j) - SteadyState(varobs[i]);
     }
 };
-

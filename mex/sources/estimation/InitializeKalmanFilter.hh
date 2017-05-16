@@ -49,13 +49,15 @@ public:
                          const std::vector<size_t> &varobs_arg,
                          double qz_criterium_arg, double lyapunov_tol_arg,
                          bool noconstant_arg);
-  virtual ~InitializeKalmanFilter();
+  virtual
+  ~InitializeKalmanFilter();
   // initialise parameter dependent KF matrices only but not Ps
   template <class Vec1, class Vec2, class Mat1, class Mat2>
-  void initialize(Vec1 &steadyState, const Vec2 &deepParams, Mat1 &R,
-				     const Mat2 &Q, Matrix &RQRt, Matrix &T,
-				     const MatrixConstView &dataView,
-				     MatrixView &detrendedDataView)
+  void
+  initialize(Vec1 &steadyState, const Vec2 &deepParams, Mat1 &R,
+             const Mat2 &Q, Matrix &RQRt, Matrix &T,
+             const MatrixConstView &dataView,
+             MatrixView &detrendedDataView)
   {
     modelSolution.compute(steadyState, deepParams, g_x, g_u);
     detrendData.detrend(steadyState, dataView, detrendedDataView);
@@ -66,10 +68,11 @@ public:
 
   // initialise all KF matrices
   template <class Vec1, class Vec2, class Mat1, class Mat2>
-  void initialize(Vec1 &steadyState, const Vec2 &deepParams, Mat1 &R,
-				     const Mat2 &Q, Matrix &RQRt, Matrix &T, Matrix &Pstar, Matrix &Pinf,
-				     const MatrixConstView &dataView,
-				     MatrixView &detrendedDataView)
+  void
+  initialize(Vec1 &steadyState, const Vec2 &deepParams, Mat1 &R,
+             const Mat2 &Q, Matrix &RQRt, Matrix &T, Matrix &Pstar, Matrix &Pinf,
+             const MatrixConstView &dataView,
+             MatrixView &detrendedDataView)
   {
     initialize(steadyState, deepParams, R, Q, RQRt, T, dataView, detrendedDataView);
     setPstar(Pstar, Pinf, T, RQRt);
@@ -90,7 +93,8 @@ private:
   void setT(Matrix &T);
 
   template <class Mat1, class Mat2>
-  void setRQR(Mat1 &R, const Mat2 &Q, Matrix &RQRt)
+  void
+  setRQR(Mat1 &R, const Mat2 &Q, Matrix &RQRt)
   {
     mat::assignByVectors(R, mat::nullVec, mat::nullVec, g_u, zeta_varobs_back_mixed, mat::nullVec);
 

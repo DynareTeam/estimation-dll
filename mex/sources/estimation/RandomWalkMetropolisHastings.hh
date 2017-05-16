@@ -42,13 +42,16 @@ public:
     parDraw(size), newParDraw(size)
   {
   };
-  virtual ~RandomWalkMetropolisHastings() {};
+  virtual ~RandomWalkMetropolisHastings()
+  {
+  };
 
   template<class VEC1>
-  double compute(VectorView &mhLogPostDens, MatrixView &mhParams, VEC1 &steadyState,
-		 Vector &estParams, VectorView &deepParams, const MatrixConstView &data, MatrixView &Q, Matrix &H,
-		 const size_t presampleStart, const size_t startDraw, size_t nMHruns,
-		 LogPosteriorDensity &lpd, Proposal &pDD, EstimatedParametersDescription &epd)
+  double
+  compute(VectorView &mhLogPostDens, MatrixView &mhParams, VEC1 &steadyState,
+          Vector &estParams, VectorView &deepParams, const MatrixConstView &data, MatrixView &Q, Matrix &H,
+          const size_t presampleStart, const size_t startDraw, size_t nMHruns,
+          LogPosteriorDensity &lpd, Proposal &pDD, EstimatedParametersDescription &epd)
   {
     //streambuf *likbuf, *drawbuf *backup;
     std::ofstream urandfilestr, drawfilestr;
@@ -64,46 +67,46 @@ public:
 
     for (size_t run = startDraw - 1; run < nMHruns; ++run)
       {
-	overbound = false;
-	pDD.draw(parDraw, newParDraw);
-	for (count = 0; count < parDraw.getSize(); ++count)
-	  {
-	    overbound = (newParDraw(count) < epd.estParams[count].lower_bound || newParDraw(count) > epd.estParams[count].upper_bound);
-	    if (overbound)
-	      {
-		newLogpost = -INFINITY;
-		break;
-	      }
-	  }
-	if (!overbound)
-	  {
-	    try
-	      {
-		newLogpost = -lpd.compute(steadyState, newParDraw, deepParams, data, Q, H, presampleStart);
-	      }
-	    catch (const std::exception &e)
-	      {
-		throw; // for now handle the system and other errors higher-up
-	      }
-	    catch (...)
-	      {
-		newLogpost = -INFINITY;
-	      }
-	  }
-	urand = pDD.selectionTestDraw();
-	if ((newLogpost > -INFINITY) && log(urand) < newLogpost-logpost)
-	  {
-	    parDraw = newParDraw;
-	    logpost = newLogpost;
-	    accepted++;
-	  }
-	mat::get_row(mhParams, run) = parDraw;
-	mhLogPostDens(run) = logpost;
+        overbound = false;
+        pDD.draw(parDraw, newParDraw);
+        for (count = 0; count < parDraw.getSize(); ++count)
+          {
+            overbound = (newParDraw(count) < epd.estParams[count].lower_bound || newParDraw(count) > epd.estParams[count].upper_bound);
+            if (overbound)
+              {
+                newLogpost = -INFINITY;
+                break;
+              }
+          }
+        if (!overbound)
+          {
+            try
+              {
+                newLogpost = -lpd.compute(steadyState, newParDraw, deepParams, data, Q, H, presampleStart);
+              }
+            catch (const std::exception &e)
+              {
+                throw; // for now handle the system and other errors higher-up
+              }
+            catch (...)
+              {
+                newLogpost = -INFINITY;
+              }
+          }
+        urand = pDD.selectionTestDraw();
+        if ((newLogpost > -INFINITY) && log(urand) < newLogpost-logpost)
+          {
+            parDraw = newParDraw;
+            logpost = newLogpost;
+            accepted++;
+          }
+        mat::get_row(mhParams, run) = parDraw;
+        mhLogPostDens(run) = logpost;
 
-	urandfilestr << urand << "\n"; //","
-	for (size_t c = 0; c < newParDraw.getSize()-1; ++c)
-	  drawfilestr << newParDraw(c) << ",";
-	drawfilestr <<  newParDraw(newParDraw.getSize()-1) << "\n";
+        urandfilestr << urand << "\n"; //","
+        for (size_t c = 0; c < newParDraw.getSize()-1; ++c)
+          drawfilestr << newParDraw(c) << ",";
+        drawfilestr <<  newParDraw(newParDraw.getSize()-1) << "\n";
       }
 
     urandfilestr.close();

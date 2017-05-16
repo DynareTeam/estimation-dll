@@ -74,4 +74,3 @@ InitializeKalmanFilter::setPstar(Matrix &Pstar, Matrix &Pinf, const Matrix &T, c
 
   Pinf.setAll(0.0);
 }
-

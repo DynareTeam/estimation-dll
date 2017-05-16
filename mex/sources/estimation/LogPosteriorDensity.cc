@@ -41,7 +41,6 @@ LogPosteriorDensity::LogPosteriorDensity(const std::string &modName, EstimatedPa
 
 }
 
-
 /**
  * vector of log likelihoods for each Kalman step
  */
@@ -50,4 +49,3 @@ LogPosteriorDensity::getLikVector()
 {
   return logLikelihoodMain.getVll();
 }
-

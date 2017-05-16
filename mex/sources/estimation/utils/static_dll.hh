@@ -32,8 +32,7 @@
 #include "ts_exception.h"
 
 // Pointer to the Static function in the MEX
-typedef void (*StaticFn)
-(const double *y, const double *x, int nb_row_x, const double *params, double *residual, double *g1, double *v2);
+typedef void (*StaticFn)(const double *y, const double *x, int nb_row_x, const double *params, double *residual, double *g1, double *v2);
 
 /**
  * creates pointer to Dynamic function inside <model>_static.dll
@@ -52,12 +51,14 @@ private:
 public:
   // construct and load Static model DLL
   StaticModelDLL(const std::string &basename) throw (TSException);
-  virtual ~StaticModelDLL();
+  virtual
+  ~StaticModelDLL();
 
   //! evaluate Static model DLL
   template<class Vec1, class Vec2, class Vec3, class Mat1>
-  void eval(const Vec1 &y, const Mat1 &x, const Vec2 &modParams,
-            Vec3 &residual, Matrix *g1, Matrix *v2) throw (TSException)
+  void
+  eval(const Vec1 &y, const Mat1 &x, const Vec2 &modParams,
+       Vec3 &residual, Matrix *g1, Matrix *v2) throw (TSException)
   {
     assert(y.getStride() == 1);
     assert(x.getLd() == x.getRows());
@@ -67,6 +68,6 @@ public:
     assert(v2->getLd() == v2->getRows());
 
     Static(y.getData(), x.getData(), 1, modParams.getData(), residual.getData(),
-	    g1 == NULL ? NULL : g1->getData(), v2 == NULL ? NULL : v2->getData());
+           g1 == NULL ? NULL : g1->getData(), v2 == NULL ? NULL : v2->getData());
   };
 };

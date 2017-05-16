@@ -88,4 +88,3 @@ Proposal::selectionTestDraw()
 {
   return uniformVrng();
 }
-

@@ -47,17 +47,18 @@ struct Prior
 public:
   //! probablity density functions
   enum pShape
-  {
-    Beta = 1,
-    Gamma = 2,
-    Gaussian = 3, // i.e. Normal density
-    Inv_gamma_1 = 4, // Inverse gamma (type 1) density
-    Uniform = 5,
-    Inv_gamma_2 = 6 //Inverse gamma (type 2) density
-  };
+    {
+      Beta = 1,
+      Gamma = 2,
+      Gaussian = 3, // i.e. Normal density
+      Inv_gamma_1 = 4, // Inverse gamma (type 1) density
+      Uniform = 5,
+      Inv_gamma_2 = 6 //Inverse gamma (type 2) density
+    };
 
   Prior(double mean, double standard, double lower_bound, double upper_bound, double fhp, double shp);
-  virtual ~Prior();
+  virtual
+  ~Prior();
 
   const double mean;
   const double standard;
@@ -100,7 +101,9 @@ public:
     distribution(fhp, shp)
   {
   };
-  virtual ~BetaPrior(){};
+  virtual ~BetaPrior()
+  {
+  };
   virtual pShape
   getShape()
   {
@@ -134,7 +137,9 @@ public:
     distribution(fhp, shp)
   {
   };
-  virtual ~GammaPrior(){};
+  virtual ~GammaPrior()
+  {
+  };
   virtual pShape
   getShape()
   {
@@ -164,7 +169,9 @@ public:
     distribution(shp/2, 2/fhp)
   {
   };
-  virtual ~InvGamma1_Prior(){};
+  virtual ~InvGamma1_Prior()
+  {
+  };
   virtual pShape
   getShape()
   {
@@ -199,7 +206,9 @@ public:
     distribution(shp/2, 2/fhp)
   {
   };
-  virtual ~InvGamma2_Prior(){};
+  virtual ~InvGamma2_Prior()
+  {
+  };
   virtual pShape
   getShape()
   {
@@ -239,7 +248,9 @@ public:
     distribution(fhp, shp) //pdf distribution(mean, standard)
   {
   };
-  virtual ~GaussianPrior(){};
+  virtual ~GaussianPrior()
+  {
+  };
   virtual pShape
   getShape()
   {
@@ -277,7 +288,9 @@ public:
     distribution(fhp, shp) //pdf distribution(lower_bound, upper_bound)
   {
   };
-  virtual ~UniformPrior(){};
+  virtual ~UniformPrior()
+  {
+  };
   virtual pShape
   getShape()
   {

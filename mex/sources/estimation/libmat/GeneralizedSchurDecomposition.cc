@@ -51,7 +51,7 @@ GeneralizedSchurDecomposition::~GeneralizedSchurDecomposition()
 lapack_int
 GeneralizedSchurDecomposition::selctg(const double *alphar, const double *alphai, const double *beta)
 {
-  return ((*alphar * *alphar + *alphai * *alphai) < criterium_static * *beta * *beta);
+  return ((*alphar **alphar + *alphai **alphai) < criterium_static **beta **beta);
 }
 
 std::ostream &

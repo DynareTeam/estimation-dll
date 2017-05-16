@@ -42,9 +42,12 @@ public:
   ModelSolution(const std::string &basename,  size_t n_endo, size_t n_exo, const std::vector<size_t> &zeta_fwrd_arg,
                 const std::vector<size_t> &zeta_back_arg, const std::vector<size_t> &zeta_mixed_arg,
                 const std::vector<size_t> &zeta_static_arg, double qz_criterium);
-  virtual ~ModelSolution() {};
+  virtual ~ModelSolution()
+  {
+  };
   template <class Vec1, class Vec2, class Mat1, class Mat2>
-  void compute(Vec1 &steadyState, const Vec2 &deepParams, Mat1 &ghx, Mat2 &ghu) throw (DecisionRules::BlanchardKahnException, GeneralizedSchurDecomposition::GSDException, SteadyStateSolver::SteadyStateException)
+  void
+  compute(Vec1 &steadyState, const Vec2 &deepParams, Mat1 &ghx, Mat2 &ghu) throw (DecisionRules::BlanchardKahnException, GeneralizedSchurDecomposition::GSDException, SteadyStateSolver::SteadyStateException)
   {
     // compute Steady State
     steadyStateSolver.compute(steadyState, Mx, deepParams);
@@ -69,8 +72,9 @@ private:
   Vector llXsteadyState;
   //Matrix jacobian;
   template <class Vec1, class Vec2, class Mat1, class Mat2>
-  void ComputeModelSolution(Vec1 &steadyState, const Vec2 &deepParams,
-                            Mat1 &ghx, Mat2 &ghu)
+  void
+  ComputeModelSolution(Vec1 &steadyState, const Vec2 &deepParams,
+                       Mat1 &ghx, Mat2 &ghu)
     throw (DecisionRules::BlanchardKahnException, GeneralizedSchurDecomposition::GSDException)
   {
     // set extended Steady State

@@ -35,18 +35,20 @@ class LogPriorDensity
 
 public:
   LogPriorDensity(EstimatedParametersDescription &estParsDesc);
-  virtual ~LogPriorDensity();
+  virtual
+  ~LogPriorDensity();
 
   template<class VEC>
-  double compute(VEC &ep)
+  double
+  compute(VEC &ep)
   {
     assert(estParsDesc.estParams.size() == ep.getSize());
     double logPriorDensity = 0;
     for (size_t i = 0; i <  ep.getSize(); ++i)
       {
-	logPriorDensity += log(((*(estParsDesc.estParams[i]).prior)).pdf(ep(i)));
-	if (std::isinf(fabs(logPriorDensity)))
-	  return logPriorDensity;
+        logPriorDensity += log(((*(estParsDesc.estParams[i]).prior)).pdf(ep(i)));
+        if (std::isinf(fabs(logPriorDensity)))
+          return logPriorDensity;
       }
     return logPriorDensity;
   };

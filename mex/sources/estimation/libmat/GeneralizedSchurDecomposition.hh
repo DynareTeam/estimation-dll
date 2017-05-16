@@ -37,11 +37,14 @@ public:
   {
   public:
     const lapack_int info, n;
-    GSDException(lapack_int info_arg, lapack_int n_arg) : info(info_arg), n(n_arg) {};
+    GSDException(lapack_int info_arg, lapack_int n_arg) : info(info_arg), n(n_arg)
+    {
+    };
   };
   //! \todo Replace heuristic choice for workspace size by a query to determine the optimal size
   GeneralizedSchurDecomposition(size_t n_arg, double criterium_arg);
-  virtual ~GeneralizedSchurDecomposition();
+  virtual
+  ~GeneralizedSchurDecomposition();
   //! \todo Add a lock around the modification of criterium_static for making it thread-safe
   template<class Mat1, class Mat2, class Mat3>
   void compute(Mat1 &S, Mat2 &T, Mat3 &Z, size_t &sdim) throw (GSDException);

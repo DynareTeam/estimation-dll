@@ -36,7 +36,11 @@ public:
   LogposteriorMexErrMsgTxtException(const std::string &msg) : errMsg(msg)
   {
   }
-  inline const char *getErrMsg() { return errMsg.c_str(); }
+  inline const char *
+  getErrMsg()
+  {
+    return errMsg.c_str();
+  }
 };
 
 void
@@ -103,8 +107,8 @@ template <class VEC1, class VEC2>
 double
 logposterior(VEC1 &estParams, const MatrixConstView &data,
              const mxArray *options_, const mxArray *M_, const mxArray *estim_params_,
-	     const mxArray *bayestopt_, const mxArray *oo_, VEC2 &steadyState, double *trend_coeff,
-	     VectorView &deepParams, Matrix &H, MatrixView &Q)
+             const mxArray *bayestopt_, const mxArray *oo_, VEC2 &steadyState, double *trend_coeff,
+             VectorView &deepParams, Matrix &H, MatrixView &Q)
 {
   double loglinear = *mxGetPr(mxGetField(options_, 0, "loglinear"));
   if (loglinear == 1)
@@ -203,10 +207,10 @@ void
 mexFunction(int nlhs, mxArray *plhs[],
             int nrhs, const mxArray *prhs[])
 {
-  if (nrhs != 7 )
+  if (nrhs != 7)
     DYN_MEX_FUNC_ERR_MSG_TXT("logposterior: exactly 7 input arguments are required.");
 
-  if (nlhs > 9 )
+  if (nlhs > 9)
     DYN_MEX_FUNC_ERR_MSG_TXT("logposterior returns 8 output arguments at the most.");
 
   // Check and retrieve the RHS arguments
@@ -219,9 +223,9 @@ mexFunction(int nlhs, mxArray *plhs[],
   for (int i = 1; i < 7; ++i)
     if (!mxIsStruct(prhs[i]))
       {
-	std::stringstream msg;
-	msg << "logposterior: argument " << i+1 << " must be a Matlab structure";
-	DYN_MEX_FUNC_ERR_MSG_TXT(msg.str().c_str());
+        std::stringstream msg;
+        msg << "logposterior: argument " << i+1 << " must be a Matlab structure";
+        DYN_MEX_FUNC_ERR_MSG_TXT(msg.str().c_str());
       }
 
   const mxArray *dataset = prhs[1];
@@ -231,7 +235,7 @@ mexFunction(int nlhs, mxArray *plhs[],
   const mxArray *bayestopt_ = prhs[5];
   const mxArray *oo_ = prhs[6];
 
-  const mxArray *dataset_data = mxGetField(dataset,0,"data");
+  const mxArray *dataset_data = mxGetField(dataset, 0, "data");
   MatrixConstView data(mxGetPr(dataset_data), mxGetM(dataset_data), mxGetN(dataset_data), mxGetM(dataset_data));
 
   // Creaete LHS arguments
@@ -251,12 +255,12 @@ mexFunction(int nlhs, mxArray *plhs[],
   double *lik = mxGetPr(plhs[0]);
   double *exit_flag = mxGetPr(plhs[1]);
 
-  VectorView steadyState(mxGetPr(mxGetField(oo_,0,"steady_state")),endo_nbr, 1);
-  VectorView deepParams(mxGetPr(mxGetField(M_, 0, "params")),param_nbr,1);
+  VectorView steadyState(mxGetPr(mxGetField(oo_, 0, "steady_state")), endo_nbr, 1);
+  VectorView deepParams(mxGetPr(mxGetField(M_, 0, "params")), param_nbr, 1);
 
   MatrixView Q(mxGetPr(mxGetField(M_, 0, "Sigma_e")), exo_nbr, exo_nbr, exo_nbr);
 
-  Matrix H(varobs_nbr,varobs_nbr);
+  Matrix H(varobs_nbr, varobs_nbr);
   const mxArray *H_mx = mxGetField(M_, 0, "H");
   if (mxGetM(H_mx) == 1 && mxGetN(H_mx) == 1 && *mxGetPr(H_mx) == 0)
     H.setAll(0.0);
@@ -270,7 +274,7 @@ mexFunction(int nlhs, mxArray *plhs[],
   try
     {
       *lik = logposterior(estParams, data, options_, M_, estim_params_, bayestopt_, oo_,
-				steadyState, trend_coeff, deepParams, H, Q);
+                          steadyState, trend_coeff, deepParams, H, Q);
       *info_mx = 0;
       *exit_flag = 0;
     }

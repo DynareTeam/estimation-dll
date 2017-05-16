@@ -63,17 +63,47 @@ private:
 public:
   Vector(size_t size_arg);
   Vector(const Vector &arg);
-  virtual ~Vector();
-  inline size_t getSize() const { return size; }
-  inline size_t getStride() const { return 1; }
-  inline double *getData() { return data; }
-  inline const double *getData() const { return data; }
-  inline void setAll(double val) { std::fill_n(data, size, val); }
-  inline double &operator() (size_t i) { return data[i]; }
-  inline const double &operator() (size_t i) const { return data[i]; }
+  virtual
+  ~Vector();
+  inline size_t
+  getSize() const
+  {
+    return size;
+  }
+  inline size_t
+  getStride() const
+  {
+    return 1;
+  }
+  inline double *
+  getData()
+  {
+    return data;
+  }
+  inline const double *
+  getData() const
+  {
+    return data;
+  }
+  inline void
+  setAll(double val)
+  {
+    std::fill_n(data, size, val);
+  }
+  inline double &
+  operator()(size_t i)
+  {
+    return data[i];
+  }
+  inline const double &
+  operator()(size_t i) const
+  {
+    return data[i];
+  }
   //! Assignment operator, only works for vectors of same size
   template<class Vec>
-  Vector &operator=(const Vec &arg)
+  Vector &
+  operator=(const Vec &arg)
   {
     assert(size == arg.getSize());
     const double *p2 = arg.getData();
@@ -99,25 +129,52 @@ private:
 public:
   VectorView(double *data_arg, size_t size_arg, size_t stride_arg);
   /* Can't use a template for the 2 constructors below: this would override the
-  constructor which uses a pointer, because the argument list is the same */
+     constructor which uses a pointer, because the argument list is the same */
   VectorView(Vector &arg, size_t offset, size_t size_arg);
   VectorView(VectorView &arg, size_t offset, size_t size_arg);
-  virtual ~VectorView(){};
-  inline size_t getSize() const { return size; }
-  inline size_t getStride() const { return stride; }
-  inline double *getData() { return data; }
-  inline const double *getData() const { return data; }
-  inline void setAll(double val)
+  virtual ~VectorView()
+  {
+  };
+  inline size_t
+  getSize() const
+  {
+    return size;
+  }
+  inline size_t
+  getStride() const
+  {
+    return stride;
+  }
+  inline double *
+  getData()
+  {
+    return data;
+  }
+  inline const double *
+  getData() const
+  {
+    return data;
+  }
+  inline void
+  setAll(double val)
   {
     for (double *p = data; p < data + size*stride; p += stride)
       *p = val;
   }
-  inline double &operator() (size_t i) { return data[i*stride]; }
-  inline const double &operator() (size_t i) const { return data[i*stride]; }
+  inline double &
+  operator()(size_t i)
+  {
+    return data[i*stride];
+  }
+  inline const double &
+  operator()(size_t i) const
+  {
+    return data[i*stride];
+  }
   //! Assignment operator, only works for vectors of same size
   template<class Vec>
   VectorView &
-  operator= (const Vec &arg)
+  operator=(const Vec &arg)
   {
     assert(size == arg.getSize());
     double *p1;
@@ -145,11 +202,29 @@ public:
   VectorConstView(const VectorView &arg, size_t offset, size_t size_arg);
   VectorConstView(const VectorConstView &arg, size_t offset, size_t size_arg);
 
-  virtual ~VectorConstView() {};
-  inline size_t getSize() const { return size; }
-  inline size_t getStride() const { return stride; }
-  inline const double *getData() const { return data; }
-  inline const double &operator() (size_t i) const { return data[i*stride]; }
+  virtual ~VectorConstView()
+  {
+  };
+  inline size_t
+  getSize() const
+  {
+    return size;
+  }
+  inline size_t
+  getStride() const
+  {
+    return stride;
+  }
+  inline const double *
+  getData() const
+  {
+    return data;
+  }
+  inline const double &
+  operator()(size_t i) const
+  {
+    return data[i*stride];
+  }
 };
 
 std::ostream &operator<<(std::ostream &out, const Vector &V);

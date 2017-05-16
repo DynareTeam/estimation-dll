@@ -55,7 +55,7 @@ public:
   {
   public:
     std::string message;
-    SteadyStateException(const std::string &message_arg) : message(message_arg) 
+    SteadyStateException(const std::string &message_arg) : message(message_arg)
     {
     }
   };
@@ -63,7 +63,8 @@ public:
   SteadyStateSolver(const std::string &basename, size_t n_endo_arg);
 
   template <class Vec1, class Mat, class Vec2>
-  void compute(Vec1 &steadyState, const Mat &Mx, const Vec2 &deepParams) throw (SteadyStateException)
+  void
+  compute(Vec1 &steadyState, const Mat &Mx, const Vec2 &deepParams) throw (SteadyStateException)
   {
     assert(steadyState.getStride() == 1);
     assert(deepParams.getStride() == 1);
@@ -97,7 +98,7 @@ public:
 
         status = gsl_multiroot_test_residual(s->f, tolerance);
       }
-    while(status == GSL_CONTINUE && iter < max_iterations);
+    while (status == GSL_CONTINUE && iter < max_iterations);
 
     if (status != GSL_SUCCESS)
       throw SteadyStateException(std::string(gsl_strerror(status)));
@@ -107,5 +108,3 @@ public:
     gsl_multiroot_fdfsolver_free(s);
   }
 };
-
-

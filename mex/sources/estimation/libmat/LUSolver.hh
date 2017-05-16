@@ -32,10 +32,13 @@ public:
   {
   public:
     const lapack_int info;
-    LUException(lapack_int info_arg) : info(info_arg) {};
+    LUException(lapack_int info_arg) : info(info_arg)
+    {
+    };
   };
   LUSolver(size_t dim_arg);
-  virtual ~LUSolver();
+  virtual
+  ~LUSolver();
   /*!
     Computes A^(-1)*B (possibly transposing A).
     The output is stored in B.

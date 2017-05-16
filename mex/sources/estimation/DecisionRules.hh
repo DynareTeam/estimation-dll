@@ -49,7 +49,9 @@ public:
     //! True if the model fails the order condition. False if it fails the rank condition.
     const bool order;
     const int n_fwrd_vars, n_explosive_eigenvals;
-    BlanchardKahnException(bool order_arg, int n_fwrd_vars_arg, int n_explosive_eigenvals_arg) : order(order_arg), n_fwrd_vars(n_fwrd_vars_arg), n_explosive_eigenvals(n_explosive_eigenvals_arg) {};
+    BlanchardKahnException(bool order_arg, int n_fwrd_vars_arg, int n_explosive_eigenvals_arg) : order(order_arg), n_fwrd_vars(n_fwrd_vars_arg), n_explosive_eigenvals(n_explosive_eigenvals_arg)
+    {
+    };
   };
   /*!
     The zetas are supposed to follow C convention (first vector index is zero).
@@ -57,7 +59,9 @@ public:
   DecisionRules(size_t n_arg, size_t p_arg, const std::vector<size_t> &zeta_fwrd_arg,
                 const std::vector<size_t> &zeta_back_arg, const std::vector<size_t> &zeta_mixed_arg,
                 const std::vector<size_t> &zeta_static_arg, double qz_criterium);
-  virtual ~DecisionRules(){};
+  virtual ~DecisionRules()
+  {
+  };
 
   /*!
     \param jacobian First columns are backetermined vars at t-1 (in the order of zeta_back_mixed), then all vars at t (in the orig order), then forward vars at t+1 (in the order of zeta_fwrd_mixed), then exogenous vars.

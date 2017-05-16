@@ -147,4 +147,3 @@ main(int argc, char **argv)
   std::cout << "Matrix Pinf: " << std::endl << Pinf << std::endl;
 
 }
-

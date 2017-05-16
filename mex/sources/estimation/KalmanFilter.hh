@@ -48,7 +48,8 @@ class KalmanFilter
 {
 
 public:
-  virtual ~KalmanFilter();
+  virtual
+  ~KalmanFilter();
   KalmanFilter(const std::string &basename, size_t n_endo, size_t n_exo, const std::vector<size_t> &zeta_fwrd_arg,
                const std::vector<size_t> &zeta_back_arg, const std::vector<size_t> &zeta_mixed_arg, const std::vector<size_t> &zeta_static_arg,
                double qz_criterium_arg, const std::vector<size_t> &varobs_arg,
@@ -56,18 +57,19 @@ public:
                bool noconstant_arg);
 
   template <class Vec1, class Vec2, class Mat1>
-  double compute(const MatrixConstView &dataView, Vec1 &steadyState,
-                 const Mat1 &Q, const Matrix &H, const Vec2 &deepParams,
-                 VectorView &vll, MatrixView &detrendedDataView, size_t start, size_t period)
+  double
+  compute(const MatrixConstView &dataView, Vec1 &steadyState,
+          const Mat1 &Q, const Matrix &H, const Vec2 &deepParams,
+          VectorView &vll, MatrixView &detrendedDataView, size_t start, size_t period)
   {
-	if (period == 0) // initialise all KF matrices
-	  initKalmanFilter.initialize(steadyState, deepParams, R, Q, RQRt, T, Pstar, Pinf,
-                                dataView, detrendedDataView);
-	else             // initialise parameter dependent KF matrices only but not Ps
-	  initKalmanFilter.initialize(steadyState, deepParams, R, Q, RQRt, T,
-                                dataView, detrendedDataView);
+    if (period == 0) // initialise all KF matrices
+      initKalmanFilter.initialize(steadyState, deepParams, R, Q, RQRt, T, Pstar, Pinf,
+                                  dataView, detrendedDataView);
+    else                           // initialise parameter dependent KF matrices only but not Ps
+      initKalmanFilter.initialize(steadyState, deepParams, R, Q, RQRt, T,
+                                  dataView, detrendedDataView);
 
-  return filter(detrendedDataView, H, vll, start);
+    return filter(detrendedDataView, H, vll, start);
   }
 
 private:

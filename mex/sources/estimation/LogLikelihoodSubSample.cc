@@ -38,4 +38,3 @@ LogLikelihoodSubSample::LogLikelihoodSubSample(const std::string &basename, Esti
                varobs, riccati_tol, lyapunov_tol, noconstant_arg), eigQ(n_exo), eigH(varobs.size())
 {
 };
-

@@ -51,5 +51,3 @@ ModelSolution::ModelSolution(const std::string &basename,  size_t n_endo_arg, si
             zeta_mixed_arg.begin(), zeta_mixed_arg.end(),
             back_inserter(zeta_back_mixed));
 }
-
-

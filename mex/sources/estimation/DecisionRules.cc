@@ -213,4 +213,3 @@ operator<<(std::ostream &out, const DecisionRules::BlanchardKahnException &e)
     out << "The Blanchard Kahn rank condition is not satisfied";
   return out;
 }
-

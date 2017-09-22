@@ -1,0 +1,32 @@
+AM_CPPFLAGS = $(shell $(MKOCTFILE) -p CPPFLAGS)
+AM_CPPFLAGS += $(shell $(MKOCTFILE) -p INCFLAGS)
+AM_CPPFLAGS += -I$(top_srcdir)/../../sources
+
+DEFS += -DOCTAVE_MEX_FILE
+DEFS += -DMEXEXT=\".mex\"
+
+AM_CFLAGS = $(shell $(MKOCTFILE) -p CPICFLAG)
+AM_FFLAGS = $(shell $(MKOCTFILE) -p FPICFLAG)
+AM_CXXFLAGS = $(shell $(MKOCTFILE) -p CXXPICFLAG)
+AM_LDFLAGS = $(shell $(MKOCTFILE) -p DL_LDFLAGS)
+
+LIBS += $(shell $(MKOCTFILE) -p OCTAVE_LIBS)
+LIBS += $(shell $(MKOCTFILE) -p BLAS_LIBS)
+LIBS += $(shell $(MKOCTFILE) -p LAPACK_LIBS)
+LIBS += $(shell $(MKOCTFILE) -p FFTW_LIBS)
+LIBS += $(shell $(MKOCTFILE) -p LIBS)
+LIBS += $(shell $(MKOCTFILE) -p FLIBS)
+
+mexdir = $(libdir)/dynare/mex/octave
+
+all-local: $(PROGRAMS)
+	$(MKDIR_P) $(top_srcdir)/../../octave
+	cd $(top_srcdir)/../../octave && \
+	for p in $(PROGRAMS); do \
+		$(LN_S) -f $(abs_srcdir)/$$p $$p; \
+	done
+
+clean-local:
+	if test -d $(top_srcdir)/../../octave; then \
+		cd $(top_srcdir)/../../octave && rm -f $(PROGRAMS); \
+	fi
